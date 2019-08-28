@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+	.pagination {
+		display: inline-block;
+	}
+	.pagination a {
+		color: black;
+		float: left;
+		padding: 5px 5px;
+		text-decoration: none;
+	}
+	.pagination a.active {
+		background-color: gray;
+		color: white;
+		border-radius: 2px;
+	}
+	</style>
+
+
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Posts</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"></link>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Consulta Clientes</strong>
+		</div>
+		
+  <div class="row">
+	  <div class="col-lg-6">
+	    <div class="input-group">
+	      <div class="input-group-btn">
+	        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Action</a></li>
+	          <li><a href="#">Another action</a></li>
+	          <li><a href="#">Something else here</a></li>
+	          <li role="separator" class="divider"></li>
+	          <li><a href="#">Separated link</a></li>
+	        </ul>
+	      </div><!-- /btn-group -->
+	      <input type="text" class="form-control" aria-label="...">
+	    </div><!-- /input-group -->
+	  </div><!-- /.col-lg-6 -->
+  </div>
+  
+  
+  
+		<br/>		
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-sm table-striped table-hover table-bordered">
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Cliente</th>
+							<th>Documento</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="post : ${clientes}">
+							<td th:text="${post.id}"></td>
+							<td th:text="${post.nome}"></td>
+							<td th:text="${post.cpfcgc}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<nav aria-label="Pagination" th:if="${clientes.totalPages gt 0}">
+				    <ul class="pagination">
+				        <li class="page-item" th:classappend="${clientes.number <2} ? 'disabled'">
+				            <a class="page-link"
+				               th:href="@{/clientes?page={clientes.size}(clientes.size=${clientes.number lt 2 ? 1 : clientes.number-1})}"
+				               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+				                <span aria-hidden="true">&laquo;</span>
+				            </a>
+				        </li>
+				        
+				        <li class="page-item" th:classappend="${pageNumber eq clientes.number} ? 'active'"
+				            th:each="pageNumber :  ${pageNumbers}">
+				            <a class="page-link" th:href="@{/clientes(size=${clientes.size}, page=${pageNumber})}" th:text="${pageNumber}"
+				               th:title="${'Page '+ pageNumber}" data-toggle="tooltip"></a>
+				        </li>
+				        
+				        <li class="page-item" th:classappend="${clientes.number + 1 eq clientes.totalPages} ? 'disabled'">
+				            <a class="page-link"
+				               th:href="@{/clientes(size=${clientes.size}, page=${clientes.number+1})}"
+				               aria-label="Next" title="Next Page" data-toggle="tooltip">
+				                <span aria-hidden="true">&raquo;</span>
+				            </a>
+				        </li>
+				    </ul>
+				</nav>								
+			
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+spring:
+  datasource:    url: jdbc:firebirdsql:localhost/3050:C:\SOFT-ROM\BANCO\SR_BD.fdb
+    driver-class-name: org.firebirdsql.jdbc.FBDriver
+    username: SYSDBA
+    password: masterkey    tomcat:      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: SELECT 1
+  jpa:    database-platform: org.hibernate.dialect.FirebirdDialect
+    hibernate:      ddl-auto: update
+    show-sql: true
+  thymeleaf:    prefix: classpath:/template    check-template-location: true
+    
